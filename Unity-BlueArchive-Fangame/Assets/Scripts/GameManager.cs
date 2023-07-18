@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject scoreUI;
     public GameObject bestrecordUI;
 
-    private int score = 0;
+    public int score = 0;
 
     private void Awake()
     {
@@ -46,6 +46,27 @@ public class GameManager : MonoBehaviour
         {
             score += newScore;
             scoreText.text = "Score : " + score;
+
+            if (score >= 10)
+            {
+                ObstacleManager.instance.wind = true;
+                if(Random.Range(0,2) == 1)
+                {
+                    ObstacleManager.instance.eastWind = true;
+                }
+                else
+                {
+                    ObstacleManager.instance.eastWind = false;
+                }
+            }
+            if (score >= 20)
+            {
+                ObstacleManager.instance.missile = true;
+            }
+            if (score >= 30)
+            {
+                ObstacleManager.instance.laser = true;
+            }
         }
     }
 

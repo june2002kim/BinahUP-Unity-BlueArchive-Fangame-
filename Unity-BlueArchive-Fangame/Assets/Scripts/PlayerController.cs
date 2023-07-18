@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     public float jumpForce = 200f;
     public float speed = 2f;
 
@@ -14,8 +16,21 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false;
     private bool isGrounded_ = false;
 
-    private Rigidbody2D playerRigidbody;
+    public Rigidbody2D playerRigidbody;
     private Animator animator;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("More than 2 ObstacleManager exist in Scene!");
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     private void Start()
