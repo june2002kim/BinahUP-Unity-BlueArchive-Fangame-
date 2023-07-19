@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
             score += newScore;
             scoreText.text = "Score : " + score;
 
-            if (score >= 10)
+            if (score >= 1)
             {
                 ObstacleManager.instance.wind = true;
                 if(Random.Range(0,2) == 1)
@@ -59,11 +59,11 @@ public class GameManager : MonoBehaviour
                     ObstacleManager.instance.eastWind = false;
                 }
             }
-            if (score >= 20)
+            if (score == 2)
             {
                 ObstacleManager.instance.missile = true;
             }
-            if (score >= 30)
+            if (score == 3)
             {
                 ObstacleManager.instance.laser = true;
             }

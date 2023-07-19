@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     private PolygonCollider2D polyCollider;
 
     public Vector3 startPosition;
     public Vector3 endPosition;
-    private Vector3 startPosition_;
-    private Vector3 endPosition_;
+    public Vector3 startPosition_;
+    public Vector3 endPosition_;
 
     private float speed = 0.5f;
     Vector2[] laserCollider = new Vector2[4];

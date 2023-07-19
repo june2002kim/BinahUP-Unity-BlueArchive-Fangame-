@@ -13,8 +13,8 @@ public class PlatformSpawner : MonoBehaviour
     public float timeBetSpawnMax = 1.15f;
     private float timeBetSpawn;
 
-    public float xMin = -3f;
-    public float xMax = 3f;
+    public float xMin = -2.7f;
+    public float xMax = 2.7f;
     public float yMin = 0.95f;
     public float yMax = 1.2f;
     private float lastSpawnX = 0.64f;

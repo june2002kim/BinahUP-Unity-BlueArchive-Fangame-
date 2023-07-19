@@ -8,18 +8,17 @@ public class ObstacleManager : MonoBehaviour
 
     public GameObject missilePrefab;
     public int missileCount = 6;
-    private LineRenderer lineRenderer;
     public Laser laserPrefab;
 
     public float timeBetSpawnMin = 0.01f;
-    public float timeBetSpawnMax = 2.00f;
+    public float timeBetSpawnMax = 1.50f;
     private float timeBetSpawn;
     public float timeBetSpawnMin_ = 2f;
     public float timeBetSpawnMax_ = 3f;
     private float timeBetSpawn_;
 
-    public float xMin = -10f;
-    public float xMax = 10f;
+    public float xMin = -8f;
+    public float xMax = 8f;
     public float yMin = 0f;
     public float yMax = 10f;
 
@@ -31,7 +30,13 @@ public class ObstacleManager : MonoBehaviour
     private float lastSpawnTime;
     private float lastSpawnTime_;
 
-    [SerializeField] private float windSpeed = 13f;
+    private Color c1 = Color.red;
+    private Color c2 = Color.yellow;
+
+    private WaitForSeconds alertDelay = new WaitForSeconds(1f);
+    private WaitForSeconds laserDelay = new WaitForSeconds(2f);
+
+    [SerializeField] private float windSpeed = 10f;
     [SerializeField] private float missileSpeed = 5f;
 
     [SerializeField] public bool wind = false;
@@ -51,8 +56,6 @@ public class ObstacleManager : MonoBehaviour
             Debug.LogWarning("More than 2 ObstacleManager exist in Scene!");
             Destroy(gameObject);
         }
-
-        lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Start is called before the first frame update
@@ -90,7 +93,8 @@ public class ObstacleManager : MonoBehaviour
 
             if (laser)
             {
-                StartCoroutine("laserShooter");
+                StartCoroutine(laserShooter());
+                laser = false;
             }
         }
     }
@@ -142,41 +146,57 @@ public class ObstacleManager : MonoBehaviour
         }
     }
 
-    public int cnt = 0;
-
     IEnumerator laserShooter()
     {
-        if (Time.time >= lastSpawnTime_ + timeBetSpawn_)
+        while (true)
         {
-            lastSpawnTime_ = Time.time;
-
-            timeBetSpawn_ = Random.Range(timeBetSpawnMin_, timeBetSpawnMax_);
-
-            float lastSpawnX_ = PlayerController.instance.transform.position.x;
-            float lastSpawnY_ = PlayerController.instance.transform.position.y;
-            float xPos = Random.Range(xMin, xMax);
-            float yPos = Random.Range(yMin, yMax);
-            float xPos_;
-            float yPos_ = lastSpawnY_ + yPos;
-
-            if (xPos * (lastSpawnX_ - xPos) < 0)
+            if (GameManager.instance.isGameover)
             {
-                xPos_ = lastSpawnX_ - xPos;
-            }
-            else
-            {
-                xPos_ = (lastSpawnX_ - xPos) * (-1f);
+                yield break;
             }
 
-            lasers.startPosition = new Vector3(xPos, -5, 0);
-            lasers.endPosition = new Vector3(xPos_ * 10, yPos_ * 10, 0);
+            if (Time.time >= lastSpawnTime_ + timeBetSpawn_)
+            {
+                lastSpawnTime_ = Time.time;
 
-            lasers.gameObject.SetActive(false);
-            lasers.gameObject.SetActive(true);
+                timeBetSpawn_ = Random.Range(timeBetSpawnMin_, timeBetSpawnMax_);
 
-            yield return new WaitForSecondsRealtime(0.5f);
-            
-            lasers.gameObject.SetActive(false);
+                float lastSpawnX_ = PlayerController.instance.transform.position.x;
+                float lastSpawnY_ = PlayerController.instance.transform.position.y;
+                float xPos = Random.Range(xMin, xMax);
+                float yPos = Random.Range(yMin, yMax);
+                float xPos_;
+                float yPos_ = lastSpawnY_ + yPos * 2;
+
+                if (xPos * (lastSpawnX_ - xPos) < 0)
+                {
+                    xPos_ = lastSpawnX_ - xPos;
+                }
+                else
+                {
+                    xPos_ = (lastSpawnX_ - xPos) * (-1f);
+                }
+
+                lasers.startPosition = new Vector3(xPos, lastSpawnY_ * -2, 0);
+                lasers.endPosition = new Vector3(xPos_ * 10, yPos_ * 10, 0);
+
+                lasers.lineRenderer.startColor = c1;
+                lasers.lineRenderer.endColor = c1;
+
+                lasers.gameObject.SetActive(false);
+                lasers.gameObject.SetActive(true);
+
+                yield return alertDelay;
+
+                lasers.lineRenderer.startColor = c2;
+                lasers.lineRenderer.endColor = c2;
+                lasers.tag = "Dead";
+
+                yield return laserDelay;
+
+                lasers.tag = "Untagged";
+                lasers.gameObject.SetActive(false);
+            }
         }
     }
 }

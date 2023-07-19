@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6133278426477078245}
   m_Layer: 0
   m_Name: Laser
-  m_TagString: Dead
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +53,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,8 +97,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0.78170204, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0.8758813, b: 0.19999999, a: 1}
+      key1: {r: 1, g: 0.8758813, b: 0.19999999, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -173,8 +173,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5befbcb21dce28a4f89f8a089d64240b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 748692415815095025}
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
+  startPosition_: {x: 0, y: 0, z: 0}
+  endPosition_: {x: 0, y: 0, z: 0}
 --- !u!114 &6133278426477078245
 MonoBehaviour:
   m_ObjectHideFlags: 0
