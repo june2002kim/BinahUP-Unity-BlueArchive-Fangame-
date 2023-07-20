@@ -45,6 +45,7 @@ public class FlyingObject : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        /*
         if (collision.collider.tag != "Player")
         {
             if (isFacingRight)
@@ -55,6 +56,26 @@ public class FlyingObject : MonoBehaviour
             {
                 transform.position = leftPool;
             }
+        }
+        */
+
+        if (isFacingRight)
+        {
+            transform.position = rightPool;
+        }
+        else
+        {
+            transform.position = leftPool;
+        }
+
+        ObstacleManager.instance.explosions[ObstacleManager.instance.explosionIndex].transform.position = collision.contacts[0].point;
+        ObstacleManager.instance.explosions[ObstacleManager.instance.explosionIndex].SetActive(false);
+        ObstacleManager.instance.explosions[ObstacleManager.instance.explosionIndex].SetActive(true);
+        ObstacleManager.instance.explosionIndex++;
+
+        if (ObstacleManager.instance.explosionIndex >= ObstacleManager.instance.missileCount)
+        {
+            ObstacleManager.instance.explosionIndex = 0;
         }
     }
 }

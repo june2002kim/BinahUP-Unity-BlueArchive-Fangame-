@@ -15,9 +15,13 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     private bool isDead = false;
     private bool isGrounded_ = false;
+    private bool isMoving = false;
 
     public Rigidbody2D playerRigidbody;
     private Animator animator;
+
+    public GameObject groundCheck;
+    public GameObject warning;
 
     private void Awake()
     {
@@ -66,7 +70,29 @@ public class PlayerController : MonoBehaviour
 
         if (!isGrounded_ && Input.GetButtonDown("Jump"))
         {
+            //isGrounded = false;
+        }
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.transform.position, Vector2.down, 0.1f);
+        //Debug.DrawRay(groundCheck.transform.position, Vector2.down * 0.1f, Color.red);
+        if(hit.collider != null)
+        {
+            if (hit.collider.tag == "Ground")
+            {
+                isGrounded = true;
+            }
+        }
+        else
+        {
             isGrounded = false;
+        }
+
+        if(transform.position.y < -4)
+        {
+            warning.SetActive(true);
+        }
+        else
+        {
+            warning.SetActive(false);
         }
     }
 
@@ -75,6 +101,15 @@ public class PlayerController : MonoBehaviour
         if (!isDead)
         {
             playerRigidbody.velocity = new Vector2(horizontal * speed, playerRigidbody.velocity.y);
+            if (horizontal != 0)
+            {
+                isMoving = true;
+            }
+            else
+            {
+                isMoving = false;
+            }
+            animator.SetBool("Moving", isMoving);
         }
     }
 
@@ -107,18 +142,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.contacts[0].normal.y > 0.7f)
         {
-            isGrounded_ = true;
-            isGrounded = true;
+            //isGrounded_ = true;
+            //isGrounded = true;
             jumpCount = 0;
+        }
+        if(collision.gameObject.tag == "Dead" && !isDead)
+        {
+            Die();
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGrounded_ = false;
+        //isGrounded_ = false;
     }
+    
 }

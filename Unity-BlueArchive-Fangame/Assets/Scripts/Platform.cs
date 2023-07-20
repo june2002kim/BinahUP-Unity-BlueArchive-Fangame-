@@ -26,7 +26,7 @@ public class Platform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.tag == "Player")
+        if(collision.collider.tag == "Player" && collision.contacts[0].normal.y <= -1f)
         {
             if (!stepped)
             {

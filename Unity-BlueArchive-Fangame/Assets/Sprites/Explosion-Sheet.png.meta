@@ -1,25 +1,34 @@
 fileFormatVersion: 2
-guid: 6370f09246e1c68448c2799582ee8798
+guid: adefc6b21af615347b20d02ae4bcc257
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3829102925473060086
-    second: Binah_Sandstorm_0
+      213: -8091056974426596705
+    second: Explosion-Sheet_0
   - first:
-      213: -3147861767557682649
-    second: Binah_Sandstorm_1
+      213: -3218929311635101537
+    second: Explosion-Sheet_1
   - first:
-      213: -7144998571671715418
-    second: Binah_Sandstorm_2
+      213: 173871583687338615
+    second: Explosion-Sheet_2
   - first:
-      213: 2503653085751340503
-    second: Binah_Sandstorm_3
+      213: 9216318445893695339
+    second: Explosion-Sheet_3
   - first:
-      213: 6262698192692851439
-    second: Binah_Sandstorm_4
+      213: 7158146712088619669
+    second: Explosion-Sheet_4
   - first:
-      213: -5684322165535739573
-    second: Binah_Sandstorm_5
+      213: -7444273379099384145
+    second: Explosion-Sheet_5
+  - first:
+      213: 5853503117448524474
+    second: Explosion-Sheet_6
+  - first:
+      213: 3004694420393919175
+    second: Explosion-Sheet_7
+  - first:
+      213: -5231044669105731008
+    second: Explosion-Sheet_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -109,13 +118,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Binah_Sandstorm_0
+      name: Explosion-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2048
-        height: 1024
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f41b31c2d4b32530800000000000000
-      internalID: 3829102925473060086
+      spriteID: f9a1bddcc8ac6bf80800000000000000
+      internalID: -8091056974426596705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Binah_Sandstorm_1
+      name: Explosion-Sheet_1
       rect:
         serializedVersion: 2
-        x: 2048
+        x: 64
         y: 0
-        width: 2048
-        height: 1024
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72ae0b6866c8054d0800000000000000
-      internalID: -3147861767557682649
+      spriteID: f98a5ee78d01453d0800000000000000
+      internalID: -3218929311635101537
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Binah_Sandstorm_2
+      name: Explosion-Sheet_2
       rect:
         serializedVersion: 2
-        x: 4096
+        x: 128
         y: 0
-        width: 2048
-        height: 1024
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a185d6a7add7dc90800000000000000
-      internalID: -7144998571671715418
+      spriteID: 77ae73eb847b96200800000000000000
+      internalID: 173871583687338615
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Binah_Sandstorm_3
+      name: Explosion-Sheet_3
       rect:
         serializedVersion: 2
-        x: 6144
+        x: 192
         y: 0
-        width: 2048
-        height: 1024
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dde4017733ceb220800000000000000
-      internalID: 2503653085751340503
+      spriteID: b67bf50ebc0f6ef70800000000000000
+      internalID: 9216318445893695339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Binah_Sandstorm_4
+      name: Explosion-Sheet_4
       rect:
         serializedVersion: 2
-        x: 8192
+        x: 256
         y: 0
-        width: 2048
-        height: 1024
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe230f633d299e650800000000000000
-      internalID: 6262698192692851439
+      spriteID: 59a2c285288d65360800000000000000
+      internalID: 7158146712088619669
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Binah_Sandstorm_5
+      name: Explosion-Sheet_5
       rect:
         serializedVersion: 2
-        x: 10240
+        x: 320
         y: 0
-        width: 2048
-        height: 1024
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,8 +237,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b41fc567b1b3d11b0800000000000000
-      internalID: -5684322165535739573
+      spriteID: fa662eb9dc0a0b890800000000000000
+      internalID: -7444273379099384145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Explosion-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab239277212db3150800000000000000
+      internalID: 5853503117448524474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Explosion-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c28d22e7a1d2b920800000000000000
+      internalID: 3004694420393919175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Explosion-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a80c5b6989767b0800000000000000
+      internalID: -5231044669105731008
       vertices: []
       indices: 
       edges: []

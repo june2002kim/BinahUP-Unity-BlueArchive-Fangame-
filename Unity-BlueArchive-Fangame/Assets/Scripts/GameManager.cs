@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     public GameObject bestrecordUI;
 
     public int score = 0;
+    public int windScore = 1;
+    public int missileScore = 2;
+    public int laserScore = 3;
+    private int windTime;
 
     private void Awake()
     {
@@ -47,23 +51,28 @@ public class GameManager : MonoBehaviour
             score += newScore;
             scoreText.text = "Score : " + score;
 
-            if (score >= 1)
+            if (score == windScore)
             {
                 ObstacleManager.instance.wind = true;
-                if(Random.Range(0,2) == 1)
+                windTime = Random.Range(0, 10);
+            }
+            if (score >= windScore)
+            {
+                if (score % 10 == windTime)
                 {
                     ObstacleManager.instance.eastWind = true;
+                    windTime = Random.Range(0, 10);
                 }
                 else
                 {
                     ObstacleManager.instance.eastWind = false;
                 }
             }
-            if (score == 2)
+            if (score == missileScore)
             {
                 ObstacleManager.instance.missile = true;
             }
-            if (score == 3)
+            if (score == laserScore)
             {
                 ObstacleManager.instance.laser = true;
             }

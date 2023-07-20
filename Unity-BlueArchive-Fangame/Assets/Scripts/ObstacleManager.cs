@@ -8,6 +8,7 @@ public class ObstacleManager : MonoBehaviour
 
     public GameObject missilePrefab;
     public int missileCount = 6;
+    public GameObject explosionPrefab;
     public Laser laserPrefab;
 
     public float timeBetSpawnMin = 0.01f;
@@ -24,13 +25,15 @@ public class ObstacleManager : MonoBehaviour
 
     private GameObject[] missiles;
     private int missileIndex = 0;
+    public int explosionIndex = 0;
+    public GameObject[] explosions;
     private Laser lasers;
 
     private Vector2 poolPosition = new Vector2(-23, 0);
     private float lastSpawnTime;
     private float lastSpawnTime_;
 
-    private Color c1 = Color.red;
+    private Color32 c1 = new Color32(239,62,116, 200);
     private Color c2 = Color.yellow;
 
     private WaitForSeconds alertDelay = new WaitForSeconds(1f);
@@ -44,6 +47,8 @@ public class ObstacleManager : MonoBehaviour
     [SerializeField] public bool laser = false;
 
     [SerializeField] public bool eastWind = false;
+    public GameObject eastSandstorm;
+    public GameObject westSandstorm;
 
     private void Awake()
     {
@@ -62,10 +67,12 @@ public class ObstacleManager : MonoBehaviour
     void Start()
     {
         missiles = new GameObject[missileCount];
+        explosions = new GameObject[missileCount];
 
         for(int i = 0; i < missileCount; i++)
         {
             missiles[i] = Instantiate(missilePrefab, poolPosition, Quaternion.identity);
+            explosions[i] = Instantiate(explosionPrefab, poolPosition, Quaternion.identity);
         }
 
         lastSpawnTime = 0f;
@@ -104,10 +111,14 @@ public class ObstacleManager : MonoBehaviour
         if (eastWind)
         {
             PlayerController.instance.playerRigidbody.AddForce(Vector2.left * windSpeed);
+            westSandstorm.SetActive(false);
+            eastSandstorm.SetActive(true);
         }
         else
         {
             PlayerController.instance.playerRigidbody.AddForce(Vector2.right * windSpeed);
+            eastSandstorm.SetActive(false);
+            westSandstorm.SetActive(true);
         }
     }
 
@@ -177,7 +188,7 @@ public class ObstacleManager : MonoBehaviour
                     xPos_ = (lastSpawnX_ - xPos) * (-1f);
                 }
 
-                lasers.startPosition = new Vector3(xPos, lastSpawnY_ * -2, 0);
+                lasers.startPosition = new Vector3(xPos, lastSpawnY_ * -5, 0);
                 lasers.endPosition = new Vector3(xPos_ * 10, yPos_ * 10, 0);
 
                 lasers.lineRenderer.startColor = c1;
