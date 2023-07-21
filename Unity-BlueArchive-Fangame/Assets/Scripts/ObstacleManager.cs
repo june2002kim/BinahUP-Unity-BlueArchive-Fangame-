@@ -33,8 +33,8 @@ public class ObstacleManager : MonoBehaviour
     private float lastSpawnTime;
     private float lastSpawnTime_;
 
-    private Color32 c1 = new Color32(239,62,116, 200);
-    private Color c2 = Color.yellow;
+    private Color32 c1 = new Color32(239, 62, 116, 200);
+    private Color c2 = new Color32(255, 255, 255, 200);
 
     private WaitForSeconds alertDelay = new WaitForSeconds(1f);
     private WaitForSeconds laserDelay = new WaitForSeconds(2f);
@@ -108,17 +108,20 @@ public class ObstacleManager : MonoBehaviour
 
     private void windBlower()
     {
-        if (eastWind)
+        if(Time.timeScale != 0)
         {
-            PlayerController.instance.playerRigidbody.AddForce(Vector2.left * windSpeed);
-            westSandstorm.SetActive(false);
-            eastSandstorm.SetActive(true);
-        }
-        else
-        {
-            PlayerController.instance.playerRigidbody.AddForce(Vector2.right * windSpeed);
-            eastSandstorm.SetActive(false);
-            westSandstorm.SetActive(true);
+            if (eastWind)
+            {
+                PlayerController.instance.playerRigidbody.AddForce(Vector2.left * windSpeed);
+                westSandstorm.SetActive(false);
+                eastSandstorm.SetActive(true);
+            }
+            else
+            {
+                PlayerController.instance.playerRigidbody.AddForce(Vector2.right * windSpeed);
+                eastSandstorm.SetActive(false);
+                westSandstorm.SetActive(true);
+            }
         }
     }
 

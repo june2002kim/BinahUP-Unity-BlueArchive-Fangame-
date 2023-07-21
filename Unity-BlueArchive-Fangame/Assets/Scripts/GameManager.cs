@@ -15,12 +15,17 @@ public class GameManager : MonoBehaviour
     public GameObject gameoverUI;
     public GameObject scoreUI;
     public GameObject bestrecordUI;
+    public GameObject dialogueUI;
 
     public int score = 0;
     public int windScore = 1;
     public int missileScore = 2;
     public int laserScore = 3;
     private int windTime;
+
+    public DialogueTrigger dialogueSand;
+    public DialogueTrigger dialogueMissile;
+    public DialogueTrigger dialogueLaser;
 
     private void Awake()
     {
@@ -53,6 +58,8 @@ public class GameManager : MonoBehaviour
 
             if (score == windScore)
             {
+                dialogueUI.SetActive(true);
+                dialogueSand.TriggerDialogue();
                 ObstacleManager.instance.wind = true;
                 windTime = Random.Range(0, 10);
             }
@@ -70,10 +77,14 @@ public class GameManager : MonoBehaviour
             }
             if (score == missileScore)
             {
+                dialogueUI.SetActive(true);
+                dialogueMissile.TriggerDialogue();
                 ObstacleManager.instance.missile = true;
             }
             if (score == laserScore)
             {
+                dialogueUI.SetActive(true);
+                dialogueLaser.TriggerDialogue();
                 ObstacleManager.instance.laser = true;
             }
         }

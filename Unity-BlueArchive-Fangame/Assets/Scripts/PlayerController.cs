@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if(Input.GetButtonDown("Jump") && jumpCount < 2)
+        if(Input.GetButtonDown("Jump") && jumpCount < 2 && Time.timeScale != 0)
         {
             jumpCount++;
 
@@ -127,10 +127,13 @@ public class PlayerController : MonoBehaviour
     {
         if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+            if (Time.timeScale != 0)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 localScale = transform.localScale;
+                localScale.x *= -1f;
+                transform.localScale = localScale;
+            }
         }
     }
 
