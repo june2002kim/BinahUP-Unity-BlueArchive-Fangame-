@@ -18,14 +18,23 @@ public class GameManager : MonoBehaviour
     public GameObject dialogueUI;
 
     public int score = 0;
-    public int windScore = 1;
-    public int missileScore = 2;
-    public int laserScore = 3;
+    public int windScore = 10;
+    public int missileScore = 15;
+    public int laserScore = 25;
     private int windTime;
+
+    private int bestScore;
+    private AudioSource gameAudio;
+    public AudioClip winClip;
+    public AudioClip loseClip;
 
     public DialogueTrigger dialogueSand;
     public DialogueTrigger dialogueMissile;
     public DialogueTrigger dialogueLaser;
+
+    public GameObject windAlert;
+    public GameObject missileAlert;
+    public GameObject laserAlert;
 
     private void Awake()
     {
@@ -38,6 +47,10 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("More than 2 GameManager exist in Scene!");
             Destroy(gameObject);
         }
+
+        bestScore = PlayerPrefs.GetInt("BestScore");
+
+        gameAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,8 +71,14 @@ public class GameManager : MonoBehaviour
 
             if (score == windScore)
             {
-                dialogueUI.SetActive(true);
-                dialogueSand.TriggerDialogue();
+                if(bestScore < windScore)
+                {
+                    dialogueUI.SetActive(true);
+                    dialogueSand.TriggerDialogue();
+                }
+
+                windAlert.SetActive(true);
+
                 ObstacleManager.instance.wind = true;
                 windTime = Random.Range(0, 10);
             }
@@ -77,14 +96,26 @@ public class GameManager : MonoBehaviour
             }
             if (score == missileScore)
             {
-                dialogueUI.SetActive(true);
-                dialogueMissile.TriggerDialogue();
+                if (bestScore < missileScore)
+                {
+                    dialogueUI.SetActive(true);
+                    dialogueMissile.TriggerDialogue();
+                }
+
+                missileAlert.SetActive(true);
+
                 ObstacleManager.instance.missile = true;
             }
             if (score == laserScore)
             {
-                dialogueUI.SetActive(true);
-                dialogueLaser.TriggerDialogue();
+                if (bestScore < laserScore)
+                {
+                    dialogueUI.SetActive(true);
+                    dialogueLaser.TriggerDialogue();
+                }
+
+                laserAlert.SetActive(true);
+
                 ObstacleManager.instance.laser = true;
             }
         }
@@ -95,18 +126,28 @@ public class GameManager : MonoBehaviour
         isGameover = true;
         gameoverUI.SetActive(true);
 
-        int bestScore = PlayerPrefs.GetInt("BestScore");
+        gameAudio.Stop();
 
-        if(score > bestScore)
+        //int bestScore = PlayerPrefs.GetInt("BestScore");
+
+        if (score > bestScore)
         {
             bestScore = score;
             PlayerPrefs.SetInt("BestScore", bestScore);
 
             bestrecordUI.SetActive(true);
+            gameAudio.clip = winClip;
+        }
+        else
+        {
+            gameAudio.clip = loseClip;
         }
 
         scoreUI.SetActive(false);
         currentscoreText.text = "Score : " + score;
         bestscoreText.text = "( Best Score : " + bestScore + ")";
+
+        gameAudio.loop = false;
+        gameAudio.Play();
     }
 }

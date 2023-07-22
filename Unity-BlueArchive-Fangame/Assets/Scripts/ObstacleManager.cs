@@ -14,8 +14,8 @@ public class ObstacleManager : MonoBehaviour
     public float timeBetSpawnMin = 0.01f;
     public float timeBetSpawnMax = 1.50f;
     private float timeBetSpawn;
-    public float timeBetSpawnMin_ = 2f;
-    public float timeBetSpawnMax_ = 3f;
+    public float timeBetSpawnMin_ = 2.5f;
+    public float timeBetSpawnMax_ = 3.5f;
     private float timeBetSpawn_;
 
     public float xMin = -8f;
@@ -28,6 +28,7 @@ public class ObstacleManager : MonoBehaviour
     public int explosionIndex = 0;
     public GameObject[] explosions;
     private Laser lasers;
+    private bool firstLaser = true;
 
     private Vector2 poolPosition = new Vector2(-23, 0);
     private float lastSpawnTime;
@@ -36,8 +37,8 @@ public class ObstacleManager : MonoBehaviour
     private Color32 c1 = new Color32(239, 62, 116, 200);
     private Color c2 = new Color32(255, 255, 255, 200);
 
-    private WaitForSeconds alertDelay = new WaitForSeconds(1f);
-    private WaitForSeconds laserDelay = new WaitForSeconds(2f);
+    private WaitForSeconds alertDelay = new WaitForSeconds(1.5f);
+    private WaitForSeconds laserDelay = new WaitForSeconds(1f);
 
     [SerializeField] private float windSpeed = 10f;
     [SerializeField] private float missileSpeed = 5f;
@@ -80,7 +81,7 @@ public class ObstacleManager : MonoBehaviour
         lastSpawnTime_ = 0f;
         timeBetSpawn_ = 0f;
 
-        lasers = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
+        //lasers = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -100,8 +101,13 @@ public class ObstacleManager : MonoBehaviour
 
             if (laser)
             {
+                if (firstLaser)
+                {
+                    lasers = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
+                    firstLaser = false;
+                }
                 StartCoroutine(laserShooter());
-                laser = false;
+                //laser = false;
             }
         }
     }
@@ -162,6 +168,7 @@ public class ObstacleManager : MonoBehaviour
 
     IEnumerator laserShooter()
     {
+        /*
         while (true)
         {
             if (GameManager.instance.isGameover)
@@ -212,5 +219,50 @@ public class ObstacleManager : MonoBehaviour
                 lasers.gameObject.SetActive(false);
             }
         }
+        */
+
+        if (Time.time >= lastSpawnTime_ + timeBetSpawn_)
+        {
+            lastSpawnTime_ = Time.time;
+
+            timeBetSpawn_ = Random.Range(timeBetSpawnMin_, timeBetSpawnMax_);
+
+            float lastSpawnX_ = PlayerController.instance.transform.position.x;
+            float lastSpawnY_ = PlayerController.instance.transform.position.y;
+            float xPos = Random.Range(xMin, xMax);
+            float yPos = Random.Range(yMin, yMax);
+            float xPos_;
+            float yPos_ = lastSpawnY_ + yPos * 2;
+
+            if (xPos * (lastSpawnX_ - xPos) < 0)
+            {
+                xPos_ = lastSpawnX_ - xPos;
+            }
+            else
+            {
+                xPos_ = (lastSpawnX_ - xPos) * (-1f);
+            }
+
+            lasers.startPosition = new Vector3(xPos, lastSpawnY_ * -5, 0);
+            lasers.endPosition = new Vector3(xPos_ * 10, yPos_ * 10, 0);
+
+            lasers.lineRenderer.startColor = c1;
+            lasers.lineRenderer.endColor = c1;
+
+            lasers.gameObject.SetActive(false);
+            lasers.gameObject.SetActive(true);
+
+            yield return alertDelay;
+
+            lasers.lineRenderer.startColor = c2;
+            lasers.lineRenderer.endColor = c2;
+            lasers.tag = "Dead";
+
+            yield return laserDelay;
+
+            lasers.tag = "Untagged";
+            lasers.gameObject.SetActive(false);
+        }
     }
+
 }

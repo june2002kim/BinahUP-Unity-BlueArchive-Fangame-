@@ -19,9 +19,12 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D playerRigidbody;
     private Animator animator;
+    private AudioSource playerAudio;
 
     public GameObject groundCheck;
     public GameObject warning;
+
+    public AudioClip deathClip;
 
     private void Awake()
     {
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -59,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
             playerRigidbody.velocity = Vector2.zero;
             playerRigidbody.AddForce(new Vector2(0, jumpForce));
+            playerAudio.Play();
         }
         else if(Input.GetButtonUp("Jump") && playerRigidbody.velocity.y > 0)
         {
@@ -116,6 +121,9 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         animator.SetTrigger("Die");
+
+        playerAudio.clip = deathClip;
+        playerAudio.Play();
 
         playerRigidbody.velocity = Vector2.zero;
         isDead = true;
