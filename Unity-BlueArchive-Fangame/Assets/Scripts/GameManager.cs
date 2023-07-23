@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     public GameObject missileAlert;
     public GameObject laserAlert;
 
+    public bool resetScore = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -49,6 +51,11 @@ public class GameManager : MonoBehaviour
         }
 
         bestScore = PlayerPrefs.GetInt("BestScore");
+
+        if (resetScore)
+        {
+            PlayerPrefs.SetInt("BestScore", 0);
+        }
 
         gameAudio = GetComponent<AudioSource>();
     }

@@ -23,6 +23,13 @@ public class ObstacleManager : MonoBehaviour
     public float yMin = 0f;
     public float yMax = 10f;
 
+    private float xPos;
+    private float xPos_;
+    private float yPos;
+    private float yPos_;
+    private float lastSpawnX_;
+    private float lastSpawnY_;
+
     private GameObject[] missiles;
     private int missileIndex = 0;
     public int explosionIndex = 0;
@@ -38,7 +45,7 @@ public class ObstacleManager : MonoBehaviour
     private Color c2 = new Color32(255, 255, 255, 200);
 
     private WaitForSeconds alertDelay = new WaitForSeconds(1.5f);
-    private WaitForSeconds laserDelay = new WaitForSeconds(1f);
+    private WaitForSeconds laserDelay = new WaitForSeconds(0.7f);
 
     [SerializeField] private float windSpeed = 10f;
     [SerializeField] private float missileSpeed = 5f;
@@ -106,6 +113,16 @@ public class ObstacleManager : MonoBehaviour
                     lasers = Instantiate(laserPrefab, Vector3.zero, Quaternion.identity);
                     firstLaser = false;
                 }
+
+                /*
+                lastSpawnX_ = PlayerController.instance.transform.position.x;
+                lastSpawnY_ = PlayerController.instance.transform.position.y;
+                xPos = Random.Range(xMin, xMax) * 10f;
+                yPos = Random.Range(yMin, yMax) * (-10f);
+                xPos_ = xPos * (-3f);
+                yPos_ = (lastSpawnY_ + 2 - yPos) / (lastSpawnX_ - xPos) * (xPos_ - lastSpawnX_) + lastSpawnY_ + 2;
+                */
+                
                 StartCoroutine(laserShooter());
                 //laser = false;
             }
@@ -227,30 +244,29 @@ public class ObstacleManager : MonoBehaviour
 
             timeBetSpawn_ = Random.Range(timeBetSpawnMin_, timeBetSpawnMax_);
 
-            float lastSpawnX_ = PlayerController.instance.transform.position.x;
-            float lastSpawnY_ = PlayerController.instance.transform.position.y;
-            float xPos = Random.Range(xMin, xMax);
-            float yPos = Random.Range(yMin, yMax);
-            float xPos_;
-            float yPos_ = lastSpawnY_ + yPos * 2;
+            lastSpawnX_ = PlayerController.instance.transform.position.x;
+            lastSpawnY_ = PlayerController.instance.transform.position.y;
+            xPos = Random.Range(xMin, xMax) * 10f;
+            yPos = Random.Range(yMin, yMax) * (-10f);
+            xPos_ = xPos * (-3f);
+            yPos_ = (lastSpawnY_ + 2 - yPos) / (lastSpawnX_ - xPos) * (xPos_ - lastSpawnX_) + lastSpawnY_ + 2;
 
-            if (xPos * (lastSpawnX_ - xPos) < 0)
-            {
-                xPos_ = lastSpawnX_ - xPos;
-            }
-            else
-            {
-                xPos_ = (lastSpawnX_ - xPos) * (-1f);
-            }
+            Debug.Log("X : " + lastSpawnX_ + "Y : " + lastSpawnY_);
 
-            lasers.startPosition = new Vector3(xPos, lastSpawnY_ * -5, 0);
-            lasers.endPosition = new Vector3(xPos_ * 10, yPos_ * 10, 0);
+            Vector3 localStartPos = new Vector3(lastSpawnX_, lastSpawnY_, 0);
+
+
+            lasers.startPosition = new Vector3(xPos, yPos, 0);
+            lasers.endPosition = new Vector3(xPos_, yPos_, 0);
+            
 
             lasers.lineRenderer.startColor = c1;
             lasers.lineRenderer.endColor = c1;
 
+            //lasers.lineRenderer.useWorldSpace = true;
             lasers.gameObject.SetActive(false);
             lasers.gameObject.SetActive(true);
+            //lasers.lineRenderer.useWorldSpace = false;
 
             yield return alertDelay;
 

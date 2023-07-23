@@ -27,6 +27,8 @@ public class Laser : MonoBehaviour
 
     private void OnEnable()
     {
+        transform.position = Vector3.zero;
+
         lineRenderer.SetPosition(0, startPosition);
         lineRenderer.SetPosition(1, endPosition);
 

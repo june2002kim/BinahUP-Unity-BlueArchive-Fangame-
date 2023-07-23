@@ -1897,7 +1897,7 @@ MonoBehaviour:
   score: 0
   windScore: 10
   missileScore: 15
-  laserScore: 25
+  laserScore: 1
   winClip: {fileID: 8300000, guid: a6527d8e0ba87da4784a9708dc8c5419, type: 3}
   loseClip: {fileID: 8300000, guid: 645706311aff65f40b604bb4750d8a76, type: 3}
   dialogueSand: {fileID: 714205554}
@@ -1906,6 +1906,7 @@ MonoBehaviour:
   windAlert: {fileID: 939338134}
   missileAlert: {fileID: 357226698}
   laserAlert: {fileID: 2001188752}
+  resetScore: 0
 --- !u!4 &1045129616
 Transform:
   m_ObjectHideFlags: 0
