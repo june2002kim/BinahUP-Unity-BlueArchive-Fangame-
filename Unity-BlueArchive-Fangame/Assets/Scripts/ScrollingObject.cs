@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script for scrolling objects by Translate */
+
 public class ScrollingObject : MonoBehaviour
 {
     private float speed = 0.5f;

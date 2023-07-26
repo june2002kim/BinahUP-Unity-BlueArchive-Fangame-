@@ -2,33 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script for spawning platforms */
+
 public class PlatformSpawner : MonoBehaviour
 {
-    public GameObject shortplatformPrefab;
-    public GameObject platformPrefab;
-    public GameObject longplatformPrefab;
-    public int count = 15;
+    public GameObject shortplatformPrefab;  // Short platform Prefab
+    public GameObject platformPrefab;       // platform Prefab
+    public GameObject longplatformPrefab;   // Long platform Prefab
+    public int count = 300;                 // Count of platforms
 
-    public float timeBetSpawnMin = 0.01f;
-    public float timeBetSpawnMax = 1.15f;
-    private float timeBetSpawn;
+    public float timeBetSpawnMin = 0.01f;   // Minimum spawn time of platform
+    public float timeBetSpawnMax = 1.15f;   // Maximum spawn time of platform
+    private float timeBetSpawn;             // Time interval of platform spawn
 
-    public float xMin = -2.7f;
-    public float xMax = 2.7f;
-    public float yMin = 0.95f;
-    public float yMax = 1.2f;
-    private float lastSpawnX = 0.64f;
-    private float lastSpawnY = 0f;
+    public float xMin = -2.7f;              // Minimum X coordinate of platform spawn position
+    public float xMax = 2.7f;               // Maximum X coordinate of platform spawn position
+    public float yMin = 0.95f;              // Minimum Y coordinate of platform spawn position
+    public float yMax = 1.2f;               // Maximum Y coordinate of platform spawn position
+    private float lastSpawnX = 0.64f;       // Platform's last spawned X position
+    private float lastSpawnY = 0f;          // Platform's last spawned Y position
 
-    private GameObject[] platforms;
-    private int currentIndex = 0;
+    private GameObject[] platforms;         // GameObject of platform's array
+    private int currentIndex = 0;           // Index for platforms control
 
-    private Vector2 poolPosition = new Vector2(-25, 0);
-    private float lastSpawnTime;
+    private Vector2 poolPosition = new Vector2(-25, 0);     // PoolPosition for spawning platforms before it placed
+    private float lastSpawnTime;                            // Last spawn time for platform
 
     // Start is called before the first frame update
     void Start()
     {
+        /*
+         Instantiate platforms randomly to poolPosition
+         */
+
         platforms = new GameObject[count];
 
         for(int i = 0; i < count; i++)
@@ -56,6 +62,11 @@ public class PlatformSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
+         If game is not overed, replace platform above last placed platform
+         */
+
+
         if (GameManager.instance.isGameover)
         {
             return;
@@ -70,6 +81,7 @@ public class PlatformSpawner : MonoBehaviour
             float xPos = Random.Range(xMin, xMax);
             float yPos = Random.Range(yMin, yMax);
 
+            // If new platform's positin X is too close to last placed platform, move little bit 
             if(-0.5f <= xPos && xPos <= 0.5f)
             {
                 if (xPos != 0f)
@@ -90,7 +102,8 @@ public class PlatformSpawner : MonoBehaviour
                 }
             }
 
-            if(lastSpawnX + xPos < -3.8f || lastSpawnX + xPos > 3.8f)
+            // If new platform's positin X is too close to left or right side, move to other direction
+            if (lastSpawnX + xPos < -3.8f || lastSpawnX + xPos > 3.8f)
             {
                 xPos *= -1f;
             }

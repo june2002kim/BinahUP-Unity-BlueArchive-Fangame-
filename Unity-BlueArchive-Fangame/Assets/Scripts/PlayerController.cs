@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Script for Player Controlling */
+
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
-    public float jumpForce = 200f;
-    public float speed = 2f;
+    public float jumpForce = 200f;      // Player's jump force for AddForce
+    public float speed = 2f;            // Player's move speed
 
-    private float horizontal;
+    private float horizontal;           // Get horizontal axis input
     private int jumpCount = 0;
     private bool isFacingRight = true;
     private bool isGrounded = false;
     private bool isDead = false;
-    private bool isGrounded_ = false;
     private bool isMoving = false;
 
     public Rigidbody2D playerRigidbody;
@@ -28,6 +29,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        /*
+         Singleton
+         */
+
         if (instance == null)
         {
             instance = this;
@@ -50,6 +55,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        /*
+         Control player's vertical movements by rigidbody's AddForce
+         */
+
         if (isDead)
         {
             return;
@@ -70,15 +79,15 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, playerRigidbody.velocity.y * 0.5f);
         }
 
+        // Call Flip function
         Flip();
+
         animator.SetBool("Grounded", isGrounded);
 
-        if (!isGrounded_ && Input.GetButtonDown("Jump"))
-        {
-            //isGrounded = false;
-        }
+        // Use Raycast to consider player is on ground or not
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.transform.position, Vector2.down, 0.1f);
         //Debug.DrawRay(groundCheck.transform.position, Vector2.down * 0.1f, Color.red);
+
         if(hit.collider != null)
         {
             if (hit.collider.tag == "Ground")
@@ -91,6 +100,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
 
+        // If player is close to deadzone, SetActive warning sprite
         if(transform.position.y < -4)
         {
             warning.SetActive(true);
@@ -103,6 +113,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        /*
+         Control players horizontal movements by rigidbody's velocity
+         */
+
         if (!isDead)
         {
             playerRigidbody.velocity = new Vector2(horizontal * speed, playerRigidbody.velocity.y);
@@ -114,12 +128,19 @@ public class PlayerController : MonoBehaviour
             {
                 isMoving = false;
             }
+
             animator.SetBool("Moving", isMoving);
         }
     }
 
     private void Die()
     {
+        /*
+         Control player's dead statement.
+        play deathClip audio and change player's velocity to zero
+        and call GameManager's OnPlayerDead function
+         */
+
         animator.SetTrigger("Die");
 
         playerAudio.clip = deathClip;
@@ -133,8 +154,13 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        /*
+         Flips player's sprite to 'right' direction
+         */
+
         if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
+            // Flip function calls in Update, so let it doesn't change direction when game is paused by timeScale
             if (Time.timeScale != 0)
             {
                 isFacingRight = !isFacingRight;
@@ -147,6 +173,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
+         If player collides with trigger which has "Dead" tag(laser), kill player
+         */
+
         if(collision.tag=="Dead" && !isDead)
         {
             Die();
@@ -156,10 +186,14 @@ public class PlayerController : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        /*
+         If player collides with smaller than 45 degree ground, reset jump count
+        If player collides with object which has "Dead" tag(missile), kill player
+        Not considering 'isGrounded' boolean by OnCollisionEnter2D and OnCollisionExit2D is player keeps taking apart with platform because it scrolls down.
+         */
+
         if(collision.contacts[0].normal.y > 0.7f)
         {
-            //isGrounded_ = true;
-            //isGrounded = true;
             jumpCount = 0;
         }
         if(collision.gameObject.tag == "Dead" && !isDead)
@@ -167,10 +201,4 @@ public class PlayerController : MonoBehaviour
             Die();
         }
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        //isGrounded_ = false;
-    }
-    
 }
