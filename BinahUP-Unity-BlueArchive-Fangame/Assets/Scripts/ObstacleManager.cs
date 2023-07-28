@@ -47,8 +47,8 @@ public class ObstacleManager : MonoBehaviour
     private Color32 c1 = new Color32(239, 62, 116, 200);            // Red color for laser alert
     private Color c2 = new Color32(255, 255, 255, 200);             // White color for laser (Laser's original color)
 
-    private WaitForSeconds alertDelay = new WaitForSeconds(1.5f);   // Coroutine delay for alert
-    private WaitForSeconds laserDelay = new WaitForSeconds(0.7f);   // Coroutine delay for laser
+    private WaitForSeconds alertDelay = new WaitForSeconds(1f);   // Coroutine delay for alert
+    private WaitForSeconds laserDelay = new WaitForSeconds(0.3f);   // Coroutine delay for laser
 
     [SerializeField] private float windSpeed = 10f;                 // Wind blowing speed for AddForce
     [SerializeField] private float missileSpeed = 5f;
@@ -281,7 +281,7 @@ public class ObstacleManager : MonoBehaviour
             xPos = Random.Range(xMin, xMax) * 10f;                                                                  // Random Laser's start X position
             yPos = Random.Range(yMin, yMax) * (-10f);                                                               // Random Laser's start Y position (negative)
             xPos_ = xPos * (-3f);                                                                                   // Laser's end X position (other side)
-            yPos_ = (lastSpawnY_ + 2 - yPos) / (lastSpawnX_ - xPos) * (xPos_ - lastSpawnX_) + lastSpawnY_ + 2;      // Laser's end Y position (calculated line equation which passes by start position of laser and above player's position)
+            yPos_ = (lastSpawnY_ + 1 - yPos) / (lastSpawnX_ - xPos) * (xPos_ - lastSpawnX_) + lastSpawnY_ + 1;      // Laser's end Y position (calculated line equation which passes by start position of laser and above player's position)
 
             // Set laser's positions
             lasers.startPosition = new Vector3(xPos, yPos, 0);

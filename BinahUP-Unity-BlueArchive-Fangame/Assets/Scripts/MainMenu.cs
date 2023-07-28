@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 /* Script for Main Menu control */
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject pauseUI;
+    public AudioMixer audioMixer;
 
     private void Update()
     {
@@ -82,5 +84,10 @@ public class MainMenu : MonoBehaviour
          When "Return" button pressed in tutorial, back to paused page.
          */
         GameManager.instance.isTutorial = false;
+    }
+
+    public void setVolume(float volume)
+    {
+        audioMixer.SetFloat("volume", volume);
     }
 }
