@@ -1,4 +1,4 @@
-# BinahUP-Unity-BlueArchive-Fangame-
+# BinahUP-Unity-BlueArchive-Fangame- (2020.3.20f1ver)
 ## 전체적인 개요
 * game genre : 2d platformer
 * playable character : 아로나
